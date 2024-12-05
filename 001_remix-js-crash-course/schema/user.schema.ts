@@ -1,98 +1,68 @@
 export interface User {
-    id: string | number;
-    username: string;
+    id: string;
+    name: string;
     email: string;
     password: string;
 }
 
-
-
-
-
-
-
 export const users: User[] = [
     {
-        id: 1,
-        username: 'admin',
-        email: '0oLbV@example.com',
-        password: 'admin'
+        id: "1",
+        name: "John Doe",
+        email: "X2yfA@example.com",
+        password: "15d6a5d4-a1b2-c3d4-e5f6-7a8b9c0d1e2f"
     },
     {
-        id: 2,
-        username: 'user',
-        email: '0oLbV@example.com',
-        password: 'user'
+        id: "2",
+        name: "Jane Doe",
+        email: "9iJi0@example.com",
+        password: "u14d6a5d4-a1b2-c3d4-e5f6-7a8b9c0d1e2f"
     },
     {
-        id: 3,
-        username: 'guest',
-        email: '0oLbV@example.com',
-        password: 'guest'
+        id: "3",
+        name: "Black Doe",
+        email: "L2eM5@example.com",
+        password: "o17d6a5d4-a1b2-c3d4-e5f6-7a8b9c0d1e2f"
     },
     {
-        id: 4,
-        username: 'test',
-        email: '0oLbV@example.com',
-        password: 'test'
+        id: "4",
+        name: "Mia Flores",
+        email: "KMq3t@example.com",
+        password: "9j98d6a5d4-a1b2-c3d4-e5f6-7a8b9c0d1e2f"
     }
-]
-
-
-
-
+];
 
 
 
 function addUser(user: User) {
-    // check if user already exists
-    const existingUser = findUserByEmailPassword(user.email, user.password)
+    const existingUser = findUserByEmailandPassword(user.email, user.password);
 
     if (existingUser) {
-        throw new Error('User already exists')
+        throw new Error(`User with email ${user.email} already exists`);
     }
 
+    users.push(user);
+}
 
+function findUserById(id: string) {
+    return users.find(user => user.id === id);
+}
 
-    // add user
-    if (!existingUser) {
-        users.push(user)
+function findUserByEmailandPassword(email: string, password: string) {
+    return users.find(user => user.email === email && user.password === password);
+}
+
+function deleteUserById(id: string) {
+    const userIndex = users.findIndex(user => user.id === id);
+    if (userIndex !== -1) {
+        users.splice(userIndex, 1);
     }
 }
 
-
-function findUser(id: number) {
-    const user = users.find((u) => u.id === id)
-
-    if (!user) {
-        throw new Error('User not found')
-    }
-
-    return user
-}
-
-
-function findUserByEmailPassword(email: string, password: string) {
-    return users.find(u => (
-        u.email === email &&
-        u.password === password
-    ))
-}
-
-
-function deleteUser(id: number) {
-    const user = users.find((u) => u.id === id)
-
-    if (!user) {
-        throw new Error('User not found')
-    }
-
-    users.splice(users.indexOf(user), 1)
-}
 
 export {
     addUser,
-    findUser,
-    findUserByEmailPassword,
-    deleteUser
+    findUserById,
+    findUserByEmailandPassword,
+    deleteUserById
 }
